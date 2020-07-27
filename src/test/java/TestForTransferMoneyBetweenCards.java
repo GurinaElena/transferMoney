@@ -17,10 +17,8 @@ class MoneyTransferTest {
 
 
     private int transfermoney (String transferAmount) {
-        //int transferForCard = Integer.parseInt(transferAmount);
         return Integer.parseInt(transferAmount);
     }
-
 
     @Test
     void shouldTransferMoneyBetweenOwnCards() {
@@ -33,27 +31,17 @@ class MoneyTransferTest {
        verificationPage.validVerify(verificationCode);
 
         $(withText("Ваши карты")).waitUntil(visible, 5000);
-
-
         val balance = new LoginPage.ExtraBalance();
         val balanceOne = balance.getFirstCardBalance();
-
-        //SelenideElement actionForFirstCard = $(".list__item").find("[92df3f1c-a033-48e6-8390-206f6b1f56c0]").find("[data-test-id=action-deposit]");
-        //actionForFirstCard.click();
-
-        $("[data-test-id=action-deposit]").click();
+        SelenideElement actionForFirstCard = $(".list__item").find("[data-test-id='92df3f1c-a033-48e6-8390-206f6b1f56c0']").find("[data-test-id='action-deposit']");
+        actionForFirstCard.click();
         $(withText("Пополнение карты")).waitUntil(visible, 5000);
         $("[data-test-id=amount] input").setValue(transferAmount);
         $("[data-test-id=from] input").setValue(secondCardNumber);
         $$("button").find(exactText("Пополнить")).click();
-
         val balanceOneFinish = balanceOne - transfermoney(transferAmount) ;
-
         val finishBalance = Integer.toString(balanceOneFinish);
-
         $(withText("баланс")).find(String.valueOf(exactText(finishBalance)));
-
-
 
     }
 

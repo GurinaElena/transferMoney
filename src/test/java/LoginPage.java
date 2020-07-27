@@ -9,19 +9,19 @@ import static com.codeborne.selenide.Selenide.$$;
 public class LoginPage {
 
     private SelenideElement loginField = $("[data-test-id=login] input");
-        private SelenideElement passwordField = $("[data-test-id=password] input");
-        private SelenideElement loginButton = $("[data-test-id=action-login]");
+    private SelenideElement passwordField = $("[data-test-id=password] input");
+    private SelenideElement loginButton = $("[data-test-id=action-login]");
 
-        public VerificationPage validLogin(User.AuthInfo info) {
-            loginField.setValue(info.getLogin());
-            passwordField.setValue(info.getPassword());
-            loginButton.click();
-            return new VerificationPage();
-        }
+    public VerificationPage validLogin(User.AuthInfo info) {
+        loginField.setValue(info.getLogin());
+        passwordField.setValue(info.getPassword());
+        loginButton.click();
+        return new VerificationPage();
+    }
 
-        public static class ExtraBalance {
+    public static class ExtraBalance {
         // к сожалению, разработчики не дали нам удобного селектора, поэтому так
-        private ElementsCollection cards = $$(".list__item");
+        private SelenideElement cardOne = $("[data-test-id='92df3f1c-a033-48e6-8390-206f6b1f56c0']");
         private final String balanceStart = "баланс: ";
         private final String balanceFinish = " р.";
 
@@ -29,7 +29,7 @@ public class LoginPage {
         }
 
         public int getFirstCardBalance() {
-            val text = cards.first().text();
+            val text = cardOne.text();
             return extractBalance(text);
         }
 
@@ -40,17 +40,8 @@ public class LoginPage {
             return Integer.parseInt(value);
         }
 
-        private int transfermoney(String transferAmount) {
-            val transferForCard = Integer.parseInt(transferAmount);
-             return Integer.parseInt(transferAmount);
-        }
     }
-
-
-
-
-
-    }
+}
 
 
 
