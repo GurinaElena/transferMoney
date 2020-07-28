@@ -13,6 +13,7 @@ import static com.codeborne.selenide.Selenide.*;
 class MoneyTransferTest {
 
     String transferAmount = "1000";
+    String firstCardNumber = "5559 0000 0000 0001";
     String secondCardNumber = "5559 0000 0000 0002";
 
 
@@ -41,6 +42,31 @@ class MoneyTransferTest {
         $$("button").find(exactText("Пополнить")).click();
         val balanceOneFinish = balanceOne - transfermoney(transferAmount) ;
         val finishBalance = Integer.toString(balanceOneFinish);
+        $(withText("баланс")).find(String.valueOf(exactText(finishBalance)));
+
+    }
+
+    @Test
+        void TransferMoneyBetweenSecondAndFirstCards(){
+
+        open("http://localhost:9999");
+        val loginPage = new LoginPage();
+        val authInfo = User.getAuthInfo();
+        val verificationPage = loginPage.validLogin(authInfo);
+        val verificationCode = User.getVerificationCodeFor(authInfo);
+        verificationPage.validVerify(verificationCode);
+
+        $(withText("Ваши карты")).waitUntil(visible, 5000);
+        val balance = new LoginPage.ExtraBalanceSecondCard();
+        val balanceTwo = balance.getSecondCardBalance();
+        SelenideElement actionForSecondCard =$("[data-test-id='0f3f5c2a-249e-4c3d-8287-09f7a039391d']").find("[data-test-id='action-deposit']");
+        actionForSecondCard.click();
+        $(withText("Пополнение карты")).waitUntil(visible, 5000);
+        $("[data-test-id=amount] input").setValue(transferAmount);
+        $("[data-test-id=from] input").setValue(firstCardNumber);
+        $$("button").find(exactText("Пополнить")).click();
+        val balanceTwoFinish = balanceTwo - transfermoney(transferAmount) ;
+        val finishBalance = Integer.toString(balanceTwoFinish);
         $(withText("баланс")).find(String.valueOf(exactText(finishBalance)));
 
     }
