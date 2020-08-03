@@ -1,6 +1,6 @@
 image: Ubuntu1804  # образ для сборки
 
-stack: jdk 1.8
+stack: jdk 8
 
 branches:
   only:
