@@ -1,5 +1,6 @@
 import com.codeborne.selenide.SelenideElement;
 import lombok.val;
+import org.junit.jupiter.api.Assertions;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Condition.exactText;
@@ -32,7 +33,9 @@ public class TransferMoneyBetweenCards {
         $$("button").find(exactText("Пополнить")).click();
         val balanceOneFinish = balanceOne + transfermoney(transferAmount) ;
         val finishBalance = Integer.toString(balanceOneFinish);
-        $("[data-test-id='92df3f1c-a033-48e6-8390-206f6b1f56c0']").find(String.valueOf(exactText(finishBalance)));
+        val balanceOneSt = Integer.toString(balanceOne);
+        Assertions.assertEquals(finishBalance, balanceOneSt);
+
 
     }
 
@@ -47,9 +50,9 @@ public class TransferMoneyBetweenCards {
         $$("button").find(exactText("Пополнить")).click();
         val balanceTwoFinish = balanceTwo + transfermoney(transferAmount) ;
         val finishBalance = Integer.toString(balanceTwoFinish);
-        $("[data-test-id='0f3f5c2a-249e-4c3d-8287-09f7a039391d']").find((withText(finishBalance)));
+        val balanceTwoSt = Integer.toString(balanceTwo);
+        Assertions.assertEquals(finishBalance, balanceTwoSt);
 
     }
-
 
 }
