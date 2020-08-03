@@ -33,7 +33,7 @@ public class TransferMoneyBetweenCards {
         $$("button").find(exactText("Пополнить")).click();
         val balanceOneFinish = balanceOne + transfermoney(transferAmount) ;
         val finishBalance = Integer.toString(balanceOneFinish);
-        val balanceOneSt = Integer.toString(balanceOne);
+        val balanceOneSt = Integer.toString(balance.getFirstCardBalance());
         Assertions.assertEquals(finishBalance, balanceOneSt);
 
 
@@ -50,7 +50,7 @@ public class TransferMoneyBetweenCards {
         $$("button").find(exactText("Пополнить")).click();
         val balanceTwoFinish = balanceTwo + transfermoney(transferAmount) ;
         val finishBalance = Integer.toString(balanceTwoFinish);
-        val balanceTwoSt = Integer.toString(balanceTwo);
+        val balanceTwoSt = Integer.toString(balance.getSecondCardBalance());
         Assertions.assertEquals(finishBalance, balanceTwoSt);
 
     }
